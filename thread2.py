@@ -1,3 +1,5 @@
+# By Rich O'Regan from Stack Overflow
+
 import threading
 import time
 
