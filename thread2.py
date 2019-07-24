@@ -1,52 +1,27 @@
 import threading
 import time
-class Me(threading.Thread):
-    def __init__(self):
-        threading.Thread.__init__(self)
-        #flag to pause thread
-        self.paused = False
-        # Explicitly using Lock over RLock since the use of self.paused
-        # break reentrancy anyway, and I believe using Lock could allow
-        # one thread to pause the worker, while another resumes; haven't
-        # checked if Condition imposes additional limitations that would 
-        # prevent that. In Python 2, use of Lock instead of RLock also
-        # boosts performance.
-        self.pause_cond = threading.Condition(threading.Lock())
 
-    def run(self):
-        while True:
-            with self.pause_cond:
-                while self.paused:
-                    self.pause_cond.wait()
+# This function gets called by our thread.. so it basically becomes the thread innit..                    
+def wait_for_event(e):
+    while True:
+        print ('\tTHREAD: This is the thread speaking, we are Waiting for event to start..')
+        event_is_set = e.wait()
+        print ('\tTHREAD:  WHOOOOOO HOOOO WE GOT A SIGNAL  : %s', event_is_set)
+        e.clear()
 
-                #thread should do the thing if
-                #not paused
-                print ('do the thing')
-             time.sleep(1)
+# Main code.. 
+e = threading.Event()
+t = threading.Thread(name='empty', 
+                     target=wait_for_event,
+                     args=(e,))
+t.start()
 
-    def pause(self):
-        self.paused = True
-        # If in sleep, we acquire immediately, otherwise we wait for thread
-        # to release condition. In race, worker will still see self.paused
-        # and begin waiting until it's set back to False
-        self.pause_cond.acquire()
-
-    #should just resume the thread
-    def resume(self):
-        self.paused = False
-        # Notify so thread will wake after lock released
-        self.pause_cond.notify()
-        # Now release the lock
-        self.pause_cond.release()
-
-
-dal = Me()
-
-while 1:
-  i = str(input("q ? \n"))
-  if i == "q":
-    dal.pause() 
-  if i == "s":
-    dal.run() 
-  if i == "r":
-    dal.resume() 
+while True:
+    print ('MAIN LOOP: still in the main loop..')
+    time.sleep(4)
+    print ('MAIN LOOP: now Im gonna do some processing n')
+    time.sleep(4)
+    print ('MAIN LOOP:  .. some more procesing im doing')
+    time.sleep(4)
+    print ('MAIN LOOP: ok ready, soon we will repeat the loop..')
+    time.sleep(2)
