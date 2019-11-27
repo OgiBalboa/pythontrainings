@@ -1,6 +1,6 @@
 # pythontrainings
 Some methods solutions etc.
-# Book suggestions to improve Python knowledge ( Credit : Flavian Mwasi from Quora)
+## Book suggestions to improve Python knowledge ( Credit : Flavian Mwasi from Quora)
 Learning Penetration Testing with Python by Christopher Duffy
 
 Python Game Programming By Example by Alejandro Rodas de Paz and Joseph Howse
