@@ -1,5 +1,5 @@
 # pythontrainings
-Some methods solutions etc.
+Some methods solutions etc.  \\RIPPER\Users\fener_000.000\Desktop\Imaginer Life\WORKAPPPS\PROJELER\Lernen1000
 ## Book suggestions to improve Python knowledge ( Credit : Flavian Mwasi from Quora)
 Learning Penetration Testing with Python by Christopher Duffy
 
